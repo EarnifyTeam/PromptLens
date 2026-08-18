@@ -96,11 +96,16 @@ def save_local_key(api_key):
     except Exception as e:
         logger.warning(f"Could not save local api key file: {e}")
 
+from flask import Flask, request, jsonify, render_template, send_from_directory
+
 # ==========================================================
 # ROUTES
 # ==========================================================
 
 @app.route("/")
+@app.route("/api/index")
+@app.route("/api/index.py")
+@app.route("/index")
 def home():
     has_server_key = bool(get_server_default_key())
     return render_template(
@@ -108,7 +113,12 @@ def home():
         has_server_key=has_server_key
     )
 
+@app.route("/static/<path:filename>")
+def serve_static_files(filename):
+    return send_from_directory(static_dir, filename)
+
 @app.route("/health")
+@app.route("/api/health")
 def health():
     return jsonify({
         "status": "healthy",
@@ -122,6 +132,7 @@ def health():
 # ==========================================================
 
 @app.route("/api/verify-key", methods=["POST"])
+@app.route("/verify-key", methods=["POST"])
 def verify_key():
     try:
         data = request.get_json(silent=True) or {}
@@ -150,6 +161,7 @@ def verify_key():
 # ==========================================================
 
 @app.route("/api/analyze", methods=["POST"])
+@app.route("/analyze", methods=["POST"])
 def analyze_video():
     uploaded_files = []
     local_temp_paths = []
