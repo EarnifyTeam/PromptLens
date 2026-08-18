@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🔮 PromptLens by BornaLabs | AI Video to Master Prompt Generator</title>
+  
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="PromptLens by BornaLabs - Reverse engineer any viral video into exact AI video prompts and customizable master prompt templates using Gemini 3.6 AI Vision. Works with Sora, Runway Gen-3, Kling, Luma & Midjourney.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-middle"></div>
+  <div class="ambient-glow glow-bottom"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Top Navigation Header (Redesigned) -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-badge-icon">
+          <!-- Sparkle Star SVG (PromptX / PromptLens reference style) -->
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+            <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-wrap">
+            <span class="brand-title">PromptLens</span>
+            <span class="brand-lab-badge">BORNALABS</span>
+          </div>
+          <span class="brand-subtitle">AI Video & Master Prompt Generator</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="status-pill online">
+          <span class="status-dot"></span>
+          <span class="status-text">Gemini 3.6 Vision</span>
+        </div>
+
+        <button class="nav-btn api-btn" id="openApiModalBtn">
+          <span class="btn-icon">🔑</span>
+          <span class="btn-label" id="apiKeyStatusLabel">API Key</span>
+          <span class="key-indicator" id="keyIndicatorDot"></span>
+        </button>
+
+        <a href="https://promptx.bornalabs.in/" target="_blank" rel="noopener" class="nav-btn nav-promptx-btn">
+          <span class="btn-icon">✨</span>
+          <span>PromptX</span>
+          <span class="btn-external">↗</span>
+        </a>
+
+        <a href="#presetsSection" class="nav-btn nav-link-btn">Presets</a>
+        <a href="#howItWorks" class="nav-btn nav-link-btn">How it Works</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-icon">⚡</span>
+        <span class="badge-text">Next-Gen Video Reverse-Engineering Engine</span>
+      </div>
+
+      <h1 class="hero-title">
+        Turn Any Viral Video into a <br>
+        <span class="gradient-text">Master AI Video Prompt</span>
+      </h1>
+
+      <p class="hero-desc">
+        Upload Reels, Shorts, or high-definition clips. Our multimodal Gemini Vision AI deconstructs camera motions, cinematic lighting, shot pacing, and visual style into production-ready prompts for your favorite text-to-video generators.
+      </p>
+
+      <!-- Supported AI Generators Banner -->
+      <div class="supported-models">
+        <span class="sm-label">Compatible with:</span>
+        <div class="model-tags">
+          <span class="model-tag">🎬 Sora</span>
+          <span class="model-tag">⚡ Runway Gen-3</span>
+          <span class="model-tag">🐉 Kling AI</span>
+          <span class="model-tag">🌌 Luma Dream Machine</span>
+          <span class="model-tag">🎨 Midjourney</span>
+          <span class="model-tag">✨ Pika 2.0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Studio Main Container -->
+  <main class="studio-container">
+    
+    <!-- STEP 1: Detection Mode Selection -->
+    <div class="studio-card mode-card">
+      <div class="card-header">
+        <div class="step-badge">STEP 1</div>
+        <h2 class="card-title">Choose Output Strategy</h2>
+      </div>
+
+      <div class="mode-grid">
+        <!-- Option 1: Exact Video Prompt -->
+        <label class="mode-card-item active" id="modeSingleLabel">
+          <input type="radio" name="detectorMode" value="video_prompt" checked>
+          <div class="mode-item-header">
+            <span class="mode-icon">🎬</span>
+            <div class="mode-item-title-group">
+              <span class="mode-item-title">Exact Video Prompt</span>
+              <span class="mode-item-badge">1:1 Recreation</span>
+            </div>
+          </div>
+          <p class="mode-item-desc">
+            Deconstructs the exact subject, lighting, camera trajectory, and lens physics of this specific video to recreate an identical scene.
+          </p>
+        </label>
+
+        <!-- Option 2: Niche Master Prompt -->
+        <label class="mode-card-item" id="modeMultiLabel">
+          <input type="radio" name="detectorMode" value="master_prompt">
+          <div class="mode-item-header">
+            <span class="mode-icon">🧠</span>
+            <div class="mode-item-title-group">
+              <span class="mode-item-title">Niche Master Prompt</span>
+              <span class="mode-item-badge viral-badge">Viral Formula</span>
+            </div>
+          </div>
+          <p class="mode-item-desc">
+            Extracts the reusable viral formula, style parameters, and customizable <code>[Bracketed Placeholders]</code> for unlimited variations.
+          </p>
+        </label>
+      </div>
+    </div>
+
+    <!-- STEP 2: Video Upload & Interactive Preview -->
+    <div class="studio-card upload-card">
+      <div class="card-header">
+        <div class="step-badge">STEP 2</div>
+        <h2 class="card-title" id="uploadCardTitle">Upload Video File(s)</h2>
+        <span class="header-hint" id="uploadHint">Supports MP4, MOV, WebM (Up to 150MB)</span>
+      </div>
+
+      <!-- Drag & Drop Zone -->
+      <div class="drop-zone" id="dropZone">
+        <div class="drop-zone-content">
+          <div class="drop-icon-animated">
+            <svg class="upload-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </div>
+          <h3 class="drop-primary-text" id="dropMainText">Drag & Drop your video clip here</h3>
+          <p class="drop-secondary-text">or <span class="browse-link">browse files</span> from your device</p>
+          <div class="drop-limits">
+            <span>📹 MP4, MOV, WEBM</span>
+            <span>⚡ Max 150MB</span>
+            <span id="multiAllowedBadge">📁 Multi-File Supported</span>
+          </div>
+        </div>
+        <input type="file" id="videoFileInput" accept="video/*" class="hidden-input">
+      </div>
+
+      <!-- Video Preview Player / Selected File Display -->
+      <div class="preview-container" id="previewContainer" style="display: none;">
+        <div class="preview-header">
+          <div class="preview-title-box">
+            <span class="preview-icon">🎬</span>
+            <span class="preview-file-count" id="previewCount">1 Video Ready</span>
+          </div>
+          <button class="btn-clear" id="clearFilesBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Change Video
+          </button>
+        </div>
+
+        <div class="video-preview-wrapper" id="singleVideoPreviewWrapper">
+          <video id="videoPlayer" class="video-preview-player" controls preload="metadata"></video>
+          <div class="video-meta-bar">
+            <span class="meta-item filename" id="videoMetaName">filename.mp4</span>
+            <span class="meta-item size" id="videoMetaSize">0 MB</span>
+          </div>
+        </div>
+
+        <!-- Multi-video list -->
+        <div class="multi-video-list" id="multiVideoList" style="display: none;"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Action Trigger -->
+    <div class="action-card">
+      <button id="generateBtn" class="generate-btn" disabled>
+        <span class="btn-sparkle">✨</span>
+        <span class="btn-text" id="generateBtnText">REVERSE-ENGINEER MASTER PROMPT</span>
+        <span class="btn-arrow">➔</span>
+      </button>
+      <div class="api-warning-note" id="apiWarningNote" style="display: none;">
+        <span>⚠️ Please configure your Gemini API Key in the top navigation to start analysis.</span>
+      </div>
+    </div>
+
+    <!-- Processing Pipeline State (Animated Progress) -->
+    <div class="pipeline-card" id="pipelineCard" style="display: none;">
+      <div class="pipeline-header">
+        <div class="pulse-ring"></div>
+        <span class="pipeline-title" id="pipelineStatusText">Analyzing Video with Gemini Vision AI...</span>
+      </div>
+
+      <div class="pipeline-steps">
+        <div class="pipeline-step active" id="stepUpload">
+          <div class="step-icon">📤</div>
+          <div class="step-info">
+            <span class="step-name">1. Uploading Video</span>
+            <span class="step-sub">Transferring frames to Gemini Cloud</span>
+          </div>
+          <div class="step-status-icon spinner-small"></div>
+        </div>
+
+        <div class="pipeline-step" id="stepProcess">
+          <div class="step-icon">🧠</div>
+          <div class="step-info">
+            <span class="step-name">2. Neural Frame Analysis</span>
+            <span class="step-sub">Extracting lighting, camera motion, styles</span>
+          </div>
+          <div class="step-status-icon">⏳</div>
+        </div>
+
+        <div class="pipeline-step" id="stepFormat">
+          <div class="step-icon">✨</div>
+          <div class="step-info">
+            <span class="step-name">3. Synthesizing Master Prompt</span>
+            <span class="step-sub">Generating structured prompt template</span>
+          </div>
+          <div class="step-status-icon">⏳</div>
+        </div>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Prompt Output Studio -->
+    <div class="studio-card result-card" id="resultCard" style="display: none;">
+      <div class="result-top-bar">
+        <div class="result-title-group">
+          <div class="success-badge">✅ EXTRACTED SUCCESSFULLY</div>
+          <h3 class="result-heading" id="resultCardHeading">Your AI Master Prompt</h3>
+        </div>
+
+        <div class="result-actions">
+          <button class="action-btn copy-prompt-btn" id="copyOnlyPromptBtn">
+            <span class="action-icon">⚡</span>
+            <span class="action-text">Copy Prompt Only</span>
+          </button>
+          <button class="action-btn copy-btn" id="copyResultBtn">
+            <span class="action-icon">📋</span>
+            <span class="action-text">Copy Full Report</span>
+          </button>
+          <button class="action-btn download-btn" id="downloadResultBtn">
+            <span class="action-icon">💾</span>
+            <span class="action-text">Download .TXT</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Prompt View Options -->
+      <div class="prompt-tabs">
+        <button class="tab-btn active" data-tab="formatted">🎨 Highlighted View</button>
+        <button class="tab-btn" data-tab="raw">📄 Clean Text</button>
+      </div>
+
+      <!-- Tab 1: Formatted / Highlighted View -->
+      <div class="tab-content active" id="tabFormatted">
+        <div class="prompt-display-box" id="formattedPromptOutput"></div>
+      </div>
+
+      <!-- Tab 2: Raw View -->
+      <div class="tab-content" id="tabRaw">
+        <textarea id="rawPromptOutput" class="raw-prompt-textarea" readonly></textarea>
+      </div>
+
+      <!-- Result Footer with Tips -->
+      <div class="result-footer">
+        <div class="tips-box">
+          <span class="tip-icon">💡</span>
+          <span class="tip-text"><strong>Pro Tip:</strong> Paste this prompt directly into Sora, Kling AI, or Runway Gen-3. Replace all <code>[Bracketed Placeholders]</code> with your custom scene ideas.</span>
+        </div>
+        <button class="btn-new-analysis" id="newAnalysisBtn">🔄 Analyze Another Video</button>
+      </div>
+    </div>
+
+    <!-- Viral Presets & Examples Showcase -->
+    <div class="showcase-section" id="presetsSection">
+      <div class="section-header">
+        <div class="step-badge">SAMPLE PROMPTS</div>
+        <h2 class="section-title">What Master Prompts Look Like</h2>
+        <p class="section-desc">Click any sample below to preview how our AI extracts camera movements, lighting, and customizable bracket variables.</p>
+      </div>
+
+      <div class="presets-grid">
+        <!-- Preset 1 -->
+        <div class="preset-card" onclick="showPreset(0)">
+          <div class="preset-tag luxury">🏎️ Luxury Cinematic</div>
+          <h4 class="preset-title">Supercar Neon Night Glide</h4>
+          <p class="preset-snippet">"Cinematic 8k macro tracking shot of [Vehicle/Model] gliding through wet Tokyo streets under neon reflections..."</p>
+          <div class="preset-footer">
+            <span>Sora / Kling AI</span>
+            <span class="preview-arrow">Inspect ➔</span>
+          </div>
+        </div>
+
+        <!-- Preset 2 -->
+        <div class="preset-card" onclick="showPreset(1)">
+          <div class="preset-tag viral">🧠 Dark Psychology</div>
+          <h4 class="preset-title">Viral Shadow Hook Reel</h4>
+          <p class="preset-snippet">"High-contrast moody silhouette portrait of [Character Description] stepping out of volumetric smoke..."</p>
+          <div class="preset-footer">
+            <span>TikTok / Reels</span>
+            <span class="preview-arrow">Inspect ➔</span>
+          </div>
+        </div>
+
+        <!-- Preset 3 -->
+        <div class="preset-card" onclick="showPreset(2)">
+          <div class="preset-tag tech">💻 Futuristic Tech</div>
+          <h4 class="preset-title">Holographic Device Showcase</h4>
+          <p class="preset-snippet">"Smooth 360-degree orbital camera orbiting a floating [Futuristic Gadget], glowing translucent UI widgets..."</p>
+          <div class="preset-footer">
+            <span>Runway Gen-3</span>
+            <span class="preview-arrow">Inspect ➔</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="how-it-works-section" id="howItWorks">
+      <div class="section-header">
+        <div class="step-badge">HOW IT WORKS</div>
+        <h2 class="section-title">Deconstruct Video Style in 3 Steps</h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3 class="step-heading">Upload Source Clip</h3>
+          <p class="step-paragraph">Upload any high-performing video, reel, or short. The tool accepts MP4, MOV, and WebM up to 150MB.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3 class="step-heading">Gemini Vision AI Dissection</h3>
+          <p class="step-paragraph">Google Gemini 3.6 Flash Vision inspects frame sequences, lens physics, camera trajectory, color grading, and timing hooks.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3 class="step-heading">Copy & Generate</h3>
+          <p class="step-paragraph">Receive your ready-to-use prompt or master template. Paste into Sora, Kling, or Runway to produce infinite viral variations.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer (Redesigned SaaS Grade) -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Col 1: Brand & Bio -->
+      <div class="footer-col footer-brand-col">
+        <div class="footer-brand-wrap">
+          <div class="footer-brand-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <span class="footer-brand-title">PromptLens</span>
+          <span class="brand-lab-badge small">BORNALABS</span>
+        </div>
+        <p class="footer-tagline">
+          The next-generation video reverse-engineering AI studio. Turn any viral footage into precision master prompt blueprints.
+        </p>
+        <div class="footer-status-tag">
+          <span class="status-dot"></span>
+          <span>Engine Status: 100% Operational</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Capabilities -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Capabilities</h4>
+        <ul class="footer-links">
+          <li><a href="#">🎬 Exact Shot Recreation</a></li>
+          <li><a href="#">🧠 Viral Niche Formula</a></li>
+          <li><a href="#">🔍 Camera & Motion Deconstruction</a></li>
+          <li><a href="#">🎨 Lighting & Vibe Extraction</a></li>
+          <li><a href="#">📁 Multi-Clip Batching</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Supported AI Models -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Compatible AI</h4>
+        <ul class="footer-links">
+          <li><a href="https://openai.com/sora" target="_blank" rel="noopener">OpenAI Sora</a></li>
+          <li><a href="https://runwayml.com" target="_blank" rel="noopener">Runway Gen-3 Alpha</a></li>
+          <li><a href="https://klingai.org" target="_blank" rel="noopener">Kling AI Video</a></li>
+          <li><a href="https://lumalabs.ai" target="_blank" rel="noopener">Luma Dream Machine</a></li>
+          <li><a href="https://midjourney.com" target="_blank" rel="noopener">Midjourney v6</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Developer & Ecosystem -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">BornaLabs Ecosystem</h4>
+        <a href="https://promptx.bornalabs.in/" target="_blank" rel="noopener" class="dev-badge-box">
+          <span class="dev-label">Explore Sister Tool</span>
+          <span class="dev-name">🔮 PromptX Studio ↗</span>
+          <span class="dev-url">promptx.bornalabs.in</span>
+        </a>
+        <ul class="footer-links" style="margin-top: 12px;">
+          <li><a href="https://promptx.bornalabs.in/" target="_blank" rel="noopener">⚡ PromptX Image Generator ↗</a></li>
+          <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a></li>
+          <li><a href="#howItWorks">Prompt Engineering Guide</a></li>
+          <li><a href="javascript:void(0)" id="footerApiBtn">Configure API Keys</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright Bar -->
+    <div class="footer-bottom-bar">
+      <div class="footer-bottom-container">
+        <span>© 2026 <strong>PromptLens</strong> • Engineered by <a href="https://promptx.bornalabs.in/" target="_blank" rel="noopener" class="footer-lab-link"><strong>BornaLabs</strong></a>. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="https://promptx.bornalabs.in/" target="_blank" rel="noopener" class="footer-network-tag">🌐 promptx.bornalabs.in</a>
+          <span>•</span>
+          <span>Gemini 3.6 Vision Powered</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- API KEY CONFIGURATION MODAL -->
+  <div id="apiModal" class="modal-backdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🔑</span>
+          <div>
+            <h3 class="modal-heading">Gemini API Settings</h3>
+            <p class="modal-subheading">Configure your personal Google Gemini API key</p>
+          </div>
+        </div>
+        <button class="modal-close" id="closeApiModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="modal-label" for="apiKeyInputModal">Gemini API Key</label>
+          <div class="input-password-wrap">
+            <input type="password" id="apiKeyInputModal" class="modal-text-input" placeholder="AIzaSy... or AQ...">
+            <button type="button" class="btn-toggle-eye" id="toggleApiKeyVisibility">👁️</button>
+          </div>
+          <span class="modal-help-text">
+            Key is securely saved in your browser's private storage (localStorage) and never exposed publicly.
+          </span>
+        </div>
+
+        <div class="api-guide-card">
+          <div class="guide-header">
+            <span>⚡ Don't have an API key?</span>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="guide-link">Get Free Key from Google AI Studio ↗</a>
+          </div>
+          <p class="guide-desc">Google AI Studio provides generous free tier credits for Gemini 3.6 Flash Vision.</p>
+        </div>
+
+        <div id="apiKeyTestStatus" class="test-status-box" style="display: none;"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-test-key" id="testApiKeyBtn">⚡ Test Connection</button>
+        <button type="button" class="btn-save-key" id="saveApiKeyBtn">💾 Save API Key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast" class="toast-notification">
+    <span class="toast-icon" id="toastIcon">✅</span>
+    <span class="toast-msg" id="toastMsg">Prompt copied to clipboard!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/static/script.js"></script>
+</body>
+</html>

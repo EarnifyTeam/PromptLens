@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Sensitive & Local API files
+api_key.txt
+.env
+.env.local
+
+# Runtime Data & Large Files
+uploads/*
+!uploads/.gitkeep
+temp/*
+!temp/.gitkeep
+logs/*
+!logs/.gitkeep
+output/*
+!output/.gitkeep
+dist/
+build/
+*.spec
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
