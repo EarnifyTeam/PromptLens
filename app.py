@@ -96,7 +96,7 @@ def save_local_key(api_key):
     except Exception as e:
         logger.warning(f"Could not save local api key file: {e}")
 
-from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory, Response
 
 # ==========================================================
 # ROUTES
@@ -115,6 +115,25 @@ def home():
 
 @app.route("/static/<path:filename>")
 def serve_static_files(filename):
+    lookup_dirs = [
+        static_dir,
+        os.path.join(BASE_DIR, "public", "static"),
+        os.path.join(BASE_DIR, "public"),
+        os.path.join(os.getcwd(), "static"),
+        os.path.join(os.getcwd(), "public", "static")
+    ]
+    
+    mimetype = "text/css" if filename.endswith(".css") else ("application/javascript" if filename.endswith(".js") else None)
+    
+    for folder in lookup_dirs:
+        target = os.path.join(folder, filename)
+        if os.path.exists(target) and os.path.isfile(target):
+            try:
+                with open(target, "r", encoding="utf-8") as f:
+                    return Response(f.read(), mimetype=mimetype)
+            except Exception:
+                pass
+                
     return send_from_directory(static_dir, filename)
 
 @app.route("/health")
