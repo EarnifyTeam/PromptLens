@@ -15,7 +15,1769 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="/static/style.css">
+  <style>
+/* ==========================================================
+   PROMPTLENS BY BORNALABS - DESIGN SYSTEM & STYLES
+   Aesthetic: Ultra-Modern Dark Glassmorphic AI SaaS
+   ========================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Color Palette */
+  --bg-dark: #07090e;
+  --bg-secondary: #0b0f19;
+  --bg-card: rgba(15, 20, 34, 0.78);
+  --bg-card-hover: rgba(22, 29, 48, 0.9);
+  --bg-input: #0d1222;
+  --bg-pill: rgba(255, 255, 255, 0.04);
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(139, 92, 246, 0.4);
+  --border-focus: rgba(6, 182, 212, 0.5);
+
+  /* Accents & Brand */
+  --violet-100: #ede9fe;
+  --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;
+  --violet-600: #7c3aed;
+  --violet-glow: rgba(139, 92, 246, 0.28);
+
+  --cyan-400: #22d3ee;
+  --cyan-500: #06b6d4;
+  --cyan-glow: rgba(6, 182, 212, 0.2);
+
+  --pink-500: #ec4899;
+  --emerald-400: #34d399;
+  --emerald-glow: rgba(52, 211, 153, 0.25);
+
+  /* Typography */
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-subtle: #6b7280;
+  --text-dim: #4b5563;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Geometry & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 40px rgba(139, 92, 246, 0.18);
+  --shadow-button: 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================
+   BACKGROUND AMBIENT GLOWS & GRID
+   ========================================================== */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+}
+
+.glow-top {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(124, 58, 237, 0.05) 70%, transparent 100%);
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.glow-middle {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  top: 40%;
+  left: -100px;
+}
+
+.glow-bottom {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+  bottom: 0;
+  right: -100px;
+}
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 95%);
+}
+
+/* ==========================================================
+   NAVIGATION BAR (PROMPTLENS BY BORNALABS)
+   ========================================================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(7, 9, 14, 0.85);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 24px;
+}
+
+.nav-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-badge-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.45);
+  transition: transform 0.2s ease;
+}
+
+.brand-badge-icon:hover {
+  transform: scale(1.05);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: -0.4px;
+  color: #fff;
+}
+
+.brand-lab-badge {
+  background: rgba(139, 92, 246, 0.16);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  color: #d8b4fe;
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.brand-lab-badge.small {
+  font-size: 9.5px;
+  padding: 1px 6px;
+}
+
+.brand-subtitle {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--emerald-400);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--emerald-400);
+  box-shadow: 0 0 10px var(--emerald-glow);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.nav-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-active);
+  transform: translateY(-1px);
+}
+
+.key-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+
+.key-indicator.configured {
+  background: var(--emerald-400);
+  box-shadow: 0 0 8px var(--emerald-glow);
+}
+
+/* ==========================================================
+   HERO SECTION
+   ========================================================== */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  padding: 56px 20px 32px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--violet-400);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -1.2px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 40%, #818cf8 70%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.supported-models {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.sm-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-subtle);
+}
+
+.model-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.model-tag {
+  background: var(--bg-pill);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.model-tag:hover {
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================
+   MAIN STUDIO CONTAINER
+   ========================================================== */
+.studio-container {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.studio-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.studio-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.step-badge {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, var(--violet-600), var(--violet-400));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.header-hint {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-subtle);
+}
+
+/* ==========================================================
+   STEP 1: MODE SELECTOR GRID
+   ========================================================== */
+.mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .mode-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mode-card-item {
+  position: relative;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mode-card-item input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mode-card-item:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(139, 92, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.mode-card-item.active {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: var(--violet-500);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.15);
+}
+
+.mode-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mode-icon {
+  font-size: 24px;
+}
+
+.mode-item-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mode-item-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mode-item-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+}
+
+.mode-item-badge.viral-badge {
+  background: rgba(236, 72, 153, 0.15);
+  color: #f472b6;
+  border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.mode-item-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.mode-item-desc code {
+  font-family: var(--font-mono);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: var(--violet-400);
+}
+
+/* ==========================================================
+   STEP 2: DROP ZONE & PREVIEW
+   ========================================================== */
+.drop-zone {
+  border: 2px dashed rgba(139, 92, 246, 0.35);
+  background: rgba(13, 18, 34, 0.6);
+  border-radius: var(--radius-md);
+  padding: 44px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--cyan-400);
+  background: rgba(6, 182, 212, 0.08);
+  box-shadow: 0 0 30px var(--cyan-glow);
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.drop-icon-animated {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--violet-400);
+  margin-bottom: 4px;
+  transition: transform 0.2s ease;
+}
+
+.upload-svg {
+  width: 24px;
+  height: 24px;
+}
+
+.drop-zone:hover .drop-icon-animated {
+  transform: translateY(-4px);
+  color: var(--cyan-400);
+  border-color: var(--cyan-400);
+}
+
+.drop-primary-text {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.browse-link {
+  color: var(--violet-400);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.drop-secondary-text {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.drop-limits {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-subtle);
+  font-weight: 500;
+}
+
+.hidden-input {
+  display: none;
+}
+
+/* Preview Player */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.preview-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn-clear {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #f87171;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-clear:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fff;
+}
+
+.video-preview-wrapper {
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.video-preview-player {
+  width: 100%;
+  max-height: 380px;
+  display: block;
+  background: #000;
+  object-fit: contain;
+}
+
+.video-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--bg-secondary);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.meta-item.filename {
+  color: var(--violet-400);
+  font-weight: 600;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta-item.size {
+  color: var(--text-muted);
+}
+
+.multi-video-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.multi-video-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.multi-video-name {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.multi-video-size {
+  font-size: 11px;
+  color: var(--text-subtle);
+}
+
+/* ==========================================================
+   STEP 3: ACTION BUTTON
+   ========================================================== */
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 18px 28px;
+  background: linear-gradient(135deg, var(--violet-600) 0%, var(--violet-500) 50%, var(--cyan-500) 100%);
+  background-size: 200% auto;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: var(--shadow-button);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.generate-btn:hover:not(:disabled) {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.5);
+}
+
+.generate-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.generate-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.api-warning-note {
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: #fde047;
+  text-align: center;
+}
+
+/* ==========================================================
+   PIPELINE PROGRESS STATE
+   ========================================================== */
+.pipeline-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--violet-500);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 0 35px var(--violet-glow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pipeline-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pulse-ring {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--cyan-400);
+  box-shadow: 0 0 15px var(--cyan-glow);
+  animation: pulse-dot 1.2s infinite ease-in-out;
+}
+
+.pipeline-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.pipeline-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pipeline-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.pipeline-step.active {
+  opacity: 1;
+  border-color: var(--border-active);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.pipeline-step.done {
+  opacity: 0.9;
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.05);
+}
+
+.step-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.step-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.step-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.spinner-small {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-top-color: var(--violet-400);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-input);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, var(--violet-500), var(--cyan-400));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  animation: progress-pulse 2s infinite ease-in-out;
+}
+
+@keyframes progress-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+/* ==========================================================
+   STEP 4: RESULT STUDIO
+   ========================================================== */
+.result-card {
+  border-color: rgba(52, 211, 153, 0.4);
+  box-shadow: 0 0 45px rgba(52, 211, 153, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.result-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.success-badge {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: var(--emerald-400);
+  margin-bottom: 4px;
+}
+
+.result-heading {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 9px 15px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  transition: all 0.2s ease;
+}
+
+.copy-prompt-btn {
+  background: linear-gradient(135deg, var(--violet-600), var(--cyan-500));
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 4px 16px var(--violet-glow);
+}
+
+.copy-prompt-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+.copy-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.copy-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-card-hover);
+}
+
+.download-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.download-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-card-hover);
+}
+
+.prompt-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 10px;
+}
+
+.tab-btn {
+  background: none;
+  border: 0;
+  color: var(--text-subtle);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+}
+
+.tab-btn.active {
+  color: var(--violet-400);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.prompt-display-box {
+  background: #080c16;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-main);
+  max-height: 480px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.prompt-var {
+  display: inline-block;
+  background: rgba(139, 92, 246, 0.18);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #c4b5fd;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 1px 2px;
+}
+
+.prompt-header-tag {
+  color: #38bdf8;
+  font-weight: 700;
+  display: block;
+  margin: 16px 0 8px;
+  font-size: 14px;
+}
+
+.bullet-line {
+  margin: 6px 0;
+  line-height: 1.55;
+  color: var(--text-main);
+}
+
+.raw-prompt-textarea {
+  width: 100%;
+  height: 280px;
+  background: #080c16;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-main);
+  resize: vertical;
+  outline: none;
+}
+
+.result-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.tips-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.tips-box code {
+  background: rgba(0,0,0,0.4);
+  color: var(--violet-400);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.btn-new-analysis {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-new-analysis:hover {
+  border-color: var(--violet-400);
+}
+
+/* ==========================================================
+   SHOWCASE & HOW IT WORKS SECTIONS
+   ========================================================== */
+.showcase-section, .how-it-works-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  margin: 10px 0 6px;
+  color: #fff;
+}
+
+.section-desc {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.presets-grid, .steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .presets-grid, .steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preset-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preset-card:hover {
+  border-color: var(--border-active);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.preset-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.preset-tag.luxury {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+}
+
+.preset-tag.viral {
+  background: rgba(236, 72, 153, 0.15);
+  color: #f472b6;
+}
+
+.preset-tag.tech {
+  background: rgba(6, 182, 212, 0.15);
+  color: #22d3ee;
+}
+
+.preset-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.preset-snippet {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.preset-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--text-subtle);
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.preview-arrow {
+  color: var(--violet-400);
+  font-weight: 700;
+}
+
+.step-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--violet-500), var(--cyan-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.step-heading {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.step-paragraph {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   FOOTER (REDESIGNED SAAS GRADE BY BORNALABS)
+   ========================================================== */
+.footer {
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(6, 8, 13, 0.95);
+  padding: 56px 20px 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 40px;
+}
+
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 580px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.footer-brand-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--violet-600), var(--violet-400));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.footer-brand-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  color: #fff;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  max-width: 320px;
+}
+
+.footer-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  font-size: 11.5px;
+  color: var(--emerald-400);
+  font-weight: 600;
+}
+
+.footer-col-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--violet-400);
+  transform: translateX(2px);
+}
+
+.nav-promptx-btn {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(99, 102, 241, 0.22));
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  color: #e9d5ff;
+  font-weight: 700;
+}
+
+.nav-promptx-btn:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(99, 102, 241, 0.4));
+  border-color: #c084fc;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px var(--violet-glow);
+}
+
+.btn-external {
+  font-size: 11px;
+  color: var(--violet-400);
+}
+
+.dev-badge-box {
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.dev-badge-box:hover {
+  background: rgba(139, 92, 246, 0.16);
+  border-color: var(--violet-400);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px var(--violet-glow);
+}
+
+.dev-label {
+  font-size: 10.5px;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.dev-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 14px;
+  color: #d8b4fe;
+  letter-spacing: 0.3px;
+}
+
+.dev-url {
+  font-size: 11px;
+  color: var(--cyan-400);
+  font-family: var(--font-mono);
+}
+
+.footer-lab-link {
+  color: #d8b4fe;
+  text-decoration: none;
+}
+
+.footer-lab-link:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.footer-network-tag {
+  color: var(--cyan-400);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.footer-network-tag:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom-bar {
+  max-width: 1140px;
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-bottom-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12.5px;
+  color: var(--text-subtle);
+}
+
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================
+   MODAL DIALOG (API KEY CONFIGURATION)
+   ========================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 11, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  padding: 16px;
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 50px var(--violet-glow);
+  transform: scale(0.92);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.modal-backdrop.show .modal-container {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-icon {
+  font-size: 24px;
+}
+
+.modal-heading {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.modal-subheading {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.modal-close {
+  background: none;
+  border: 0;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.modal-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.input-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.modal-text-input {
+  width: 100%;
+  padding: 12px 42px 12px 14px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modal-text-input:focus {
+  border-color: var(--violet-500);
+  box-shadow: 0 0 0 3px var(--violet-glow);
+}
+
+.btn-toggle-eye {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.btn-toggle-eye:hover {
+  opacity: 1;
+}
+
+.modal-help-text {
+  font-size: 11.5px;
+  color: var(--text-subtle);
+}
+
+.api-guide-card {
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.guide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.guide-link {
+  color: var(--cyan-400);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.guide-link:hover {
+  text-decoration: underline;
+}
+
+.guide-desc {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.test-status-box {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.test-status-box.success {
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: var(--emerald-400);
+}
+
+.test-status-box.error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+}
+
+.btn-test-key {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-test-key:hover {
+  border-color: var(--cyan-400);
+  color: var(--cyan-400);
+}
+
+.btn-save-key {
+  background: linear-gradient(135deg, var(--violet-600), var(--violet-500));
+  border: 0;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-save-key:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================
+   TOAST NOTIFICATION
+   ========================================================== */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(15, 20, 34, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-active);
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2000;
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+</style>
 </head>
 
 <body>
@@ -508,6 +2270,616 @@
   </div>
 
   <!-- Scripts -->
-  <script src="/static/script.js"></script>
+  <script>
+// ==========================================================
+// EARNIFY PROMPT DETECTOR PRO - JAVASCRIPT CONTROLLER
+// Handles Drag & Drop, Video Previews, API Key Storage & Generation
+// ==========================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  // DOM Elements
+  const dropZone = document.getElementById('dropZone');
+  const videoFileInput = document.getElementById('videoFileInput');
+  const previewContainer = document.getElementById('previewContainer');
+  const videoPlayer = document.getElementById('videoPlayer');
+  const videoMetaName = document.getElementById('videoMetaName');
+  const videoMetaSize = document.getElementById('videoMetaSize');
+  const clearFilesBtn = document.getElementById('clearFilesBtn');
+  const previewCount = document.getElementById('previewCount');
+  const multiVideoList = document.getElementById('multiVideoList');
+  const singleVideoPreviewWrapper = document.getElementById('singleVideoPreviewWrapper');
+  
+  const generateBtn = document.getElementById('generateBtn');
+  const generateBtnText = document.getElementById('generateBtnText');
+  const apiWarningNote = document.getElementById('apiWarningNote');
+  
+  const pipelineCard = document.getElementById('pipelineCard');
+  const pipelineStatusText = document.getElementById('pipelineStatusText');
+  const progressBarFill = document.getElementById('progressBarFill');
+  const stepUpload = document.getElementById('stepUpload');
+  const stepProcess = document.getElementById('stepProcess');
+  const stepFormat = document.getElementById('stepFormat');
+  
+  const resultCard = document.getElementById('resultCard');
+  const resultCardHeading = document.getElementById('resultCardHeading');
+  const formattedPromptOutput = document.getElementById('formattedPromptOutput');
+  const rawPromptOutput = document.getElementById('rawPromptOutput');
+  const copyResultBtn = document.getElementById('copyResultBtn');
+  const downloadResultBtn = document.getElementById('downloadResultBtn');
+  const newAnalysisBtn = document.getElementById('newAnalysisBtn');
+  
+  // API Modal Elements
+  const openApiModalBtn = document.getElementById('openApiModalBtn');
+  const footerApiBtn = document.getElementById('footerApiBtn');
+  const closeApiModalBtn = document.getElementById('closeApiModalBtn');
+  const apiModal = document.getElementById('apiModal');
+  const apiKeyInputModal = document.getElementById('apiKeyInputModal');
+  const toggleApiKeyVisibility = document.getElementById('toggleApiKeyVisibility');
+  const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+  const testApiKeyBtn = document.getElementById('testApiKeyBtn');
+  const apiKeyTestStatus = document.getElementById('apiKeyTestStatus');
+  const keyIndicatorDot = document.getElementById('keyIndicatorDot');
+  const apiKeyStatusLabel = document.getElementById('apiKeyStatusLabel');
+  
+  // Mode selection
+  const modeSingleLabel = document.getElementById('modeSingleLabel');
+  const modeMultiLabel = document.getElementById('modeMultiLabel');
+  const detectorModeInputs = document.querySelectorAll('input[name="detectorMode"]');
+  const uploadHint = document.getElementById('uploadHint');
+  const dropMainText = document.getElementById('dropMainText');
+  
+  // State
+  let selectedFiles = [];
+  let currentMode = 'video_prompt';
+  let currentPromptResult = '';
+  let storedApiKey = localStorage.getItem('gemini_api_key') || '';
+  let currentVideoObjectURL = null;
+
+  // ==========================================================
+  // API KEY INITIALIZATION & MODAL
+  // ==========================================================
+  
+  function updateApiKeyUI() {
+    if (storedApiKey && storedApiKey.trim().length > 10) {
+      keyIndicatorDot.classList.add('configured');
+      apiKeyStatusLabel.textContent = 'API Key (Set)';
+      apiWarningNote.style.display = 'none';
+      apiKeyInputModal.value = storedApiKey;
+    } else {
+      keyIndicatorDot.classList.remove('configured');
+      apiKeyStatusLabel.textContent = 'Set API Key';
+      apiKeyInputModal.value = '';
+    }
+    checkReadyToGenerate();
+  }
+
+  updateApiKeyUI();
+
+  openApiModalBtn.addEventListener('click', () => {
+    apiKeyInputModal.value = storedApiKey;
+    apiKeyTestStatus.style.display = 'none';
+    apiModal.classList.add('show');
+  });
+
+  if (footerApiBtn) {
+    footerApiBtn.addEventListener('click', () => {
+      apiKeyInputModal.value = storedApiKey;
+      apiKeyTestStatus.style.display = 'none';
+      apiModal.classList.add('show');
+    });
+  }
+
+  closeApiModalBtn.addEventListener('click', () => {
+    apiModal.classList.remove('show');
+  });
+
+  apiModal.addEventListener('click', (e) => {
+    if (e.target === apiModal) {
+      apiModal.classList.remove('show');
+    }
+  });
+
+  toggleApiKeyVisibility.addEventListener('click', () => {
+    if (apiKeyInputModal.type === 'password') {
+      apiKeyInputModal.type = 'text';
+      toggleApiKeyVisibility.textContent = '🙈';
+    } else {
+      apiKeyInputModal.type = 'password';
+      toggleApiKeyVisibility.textContent = '👁️';
+    }
+  });
+
+  saveApiKeyBtn.addEventListener('click', () => {
+    const key = apiKeyInputModal.value.trim();
+    if (key) {
+      localStorage.setItem('gemini_api_key', key);
+      storedApiKey = key;
+      showToast('✅ Gemini API Key saved securely in browser!');
+    } else {
+      localStorage.removeItem('gemini_api_key');
+      storedApiKey = '';
+      showToast('ℹ️ API Key cleared.');
+    }
+    updateApiKeyUI();
+    apiModal.classList.remove('show');
+  });
+
+  testApiKeyBtn.addEventListener('click', async () => {
+    const keyToTest = apiKeyInputModal.value.trim() || storedApiKey;
+    if (!keyToTest) {
+      showTestStatus('error', '❌ Please enter an API key to test.');
+      return;
+    }
+
+    testApiKeyBtn.disabled = true;
+    testApiKeyBtn.textContent = 'Testing...';
+    apiKeyTestStatus.style.display = 'none';
+
+    try {
+      const response = await fetch('/api/verify-key', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ apiKey: keyToTest })
+      });
+      const data = await response.json();
+
+      if (response.ok && data.valid) {
+        showTestStatus('success', '✅ Gemini Connection Successful! Model: gemini-3.6-flash is ready.');
+      } else {
+        showTestStatus('error', '❌ Invalid Key: ' + (data.error || 'Connection refused.'));
+      }
+    } catch (err) {
+      showTestStatus('error', '❌ Network error testing API key.');
+    } finally {
+      testApiKeyBtn.disabled = false;
+      testApiKeyBtn.textContent = '⚡ Test Connection';
+    }
+  });
+
+  function showTestStatus(type, msg) {
+    apiKeyTestStatus.className = 'test-status-box ' + type;
+    apiKeyTestStatus.textContent = msg;
+    apiKeyTestStatus.style.display = 'block';
+  }
+
+  // ==========================================================
+  // MODE TOGGLE HANDLERS
+  // ==========================================================
+  
+  detectorModeInputs.forEach(input => {
+    input.addEventListener('change', (e) => {
+      currentMode = e.target.value;
+      if (currentMode === 'master_prompt') {
+        modeSingleLabel.classList.remove('active');
+        modeMultiLabel.classList.add('active');
+        videoFileInput.multiple = true;
+        uploadHint.textContent = 'Select 1 or multiple video clips to find viral patterns';
+        dropMainText.textContent = 'Drag & Drop one or multiple video clips';
+      } else {
+        modeMultiLabel.classList.remove('active');
+        modeSingleLabel.classList.add('active');
+        videoFileInput.multiple = false;
+        uploadHint.textContent = 'Supports MP4, MOV, WebM (Up to 150MB)';
+        dropMainText.textContent = 'Drag & Drop your video clip here';
+      }
+      // Reset selected files on mode change if needed
+      if (selectedFiles.length > 1 && currentMode === 'video_prompt') {
+        selectedFiles = [selectedFiles[0]];
+        renderFilePreview();
+      }
+    });
+  });
+
+  // ==========================================================
+  // DRAG & DROP & FILE HANDLING
+  // ==========================================================
+  
+  dropZone.addEventListener('click', () => videoFileInput.click());
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleIncomingFiles(e.dataTransfer.files);
+    }
+  });
+
+  videoFileInput.addEventListener('change', () => {
+    if (videoFileInput.files && videoFileInput.files.length > 0) {
+      handleIncomingFiles(videoFileInput.files);
+    }
+  });
+
+  function handleIncomingFiles(fileList) {
+    const valid = Array.from(fileList).filter(f => f.type.startsWith('video/'));
+    if (valid.length === 0) {
+      showToast('❌ Please select valid video files (MP4, MOV, WebM).');
+      return;
+    }
+
+    if (currentMode === 'video_prompt') {
+      selectedFiles = [valid[0]];
+    } else {
+      selectedFiles = valid;
+    }
+
+    renderFilePreview();
+    checkReadyToGenerate();
+  }
+
+  function renderFilePreview() {
+    if (selectedFiles.length === 0) {
+      dropZone.style.display = 'block';
+      previewContainer.style.display = 'none';
+      if (currentVideoObjectURL) {
+        URL.revokeObjectURL(currentVideoObjectURL);
+        currentVideoObjectURL = null;
+      }
+      return;
+    }
+
+    dropZone.style.display = 'none';
+    previewContainer.style.display = 'flex';
+
+    if (selectedFiles.length === 1) {
+      const file = selectedFiles[0];
+      previewCount.textContent = '1 Video Selected';
+      videoMetaName.textContent = file.name;
+      videoMetaSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+
+      if (currentVideoObjectURL) {
+        URL.revokeObjectURL(currentVideoObjectURL);
+      }
+      currentVideoObjectURL = URL.createObjectURL(file);
+      videoPlayer.src = currentVideoObjectURL;
+
+      singleVideoPreviewWrapper.style.display = 'block';
+      multiVideoList.style.display = 'none';
+    } else {
+      previewCount.textContent = `${selectedFiles.length} Videos Ready for Analysis`;
+      singleVideoPreviewWrapper.style.display = 'none';
+      multiVideoList.style.display = 'grid';
+      multiVideoList.innerHTML = '';
+
+      selectedFiles.forEach((file, idx) => {
+        const item = document.createElement('div');
+        item.className = 'multi-video-item';
+        item.innerHTML = `
+          <span class="multi-video-name">📹 ${file.name}</span>
+          <span class="multi-video-size">${(file.size / (1024 * 1024)).toFixed(2)} MB</span>
+        `;
+        multiVideoList.appendChild(item);
+      });
+    }
+  }
+
+  clearFilesBtn.addEventListener('click', () => {
+    selectedFiles = [];
+    videoFileInput.value = '';
+    renderFilePreview();
+    checkReadyToGenerate();
+  });
+
+  function checkReadyToGenerate() {
+    const hasFiles = selectedFiles.length > 0;
+    const hasKey = storedApiKey && storedApiKey.trim().length > 10;
+    
+    // Check if server might have a fallback key
+    generateBtn.disabled = !hasFiles;
+    
+    if (hasFiles && !hasKey) {
+      apiWarningNote.style.display = 'block';
+    } else {
+      apiWarningNote.style.display = 'none';
+    }
+  }
+
+  // ==========================================================
+  // GENERATION & ANALYSIS PROCESS
+  // ==========================================================
+  
+  generateBtn.addEventListener('click', async () => {
+    if (selectedFiles.length === 0) return;
+
+    // UI state transitions
+    generateBtn.disabled = true;
+    resultCard.style.display = 'none';
+    pipelineCard.style.display = 'flex';
+    pipelineCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Step 1: Uploading
+    setPipelineStep(1, 25, 'Uploading video to Gemini Cloud API...');
+
+    const formData = new FormData();
+    selectedFiles.forEach(file => {
+      formData.append('video', file);
+    });
+    formData.append('apiKey', storedApiKey);
+    formData.append('mode', currentMode);
+
+    // Simulated progress transitions
+    const stepTimer1 = setTimeout(() => {
+      setPipelineStep(2, 65, 'Inspecting video frames, lighting, camera angles...');
+    }, 3000);
+
+    const stepTimer2 = setTimeout(() => {
+      setPipelineStep(3, 90, 'Synthesizing viral master prompt blueprint...');
+    }, 12000);
+
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        body: formData
+      });
+
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to analyze video');
+      }
+
+      setPipelineStep(3, 100, 'Master Prompt synthesized!');
+      setTimeout(() => {
+        pipelineCard.style.display = 'none';
+        displayResult(data.master_prompt, data.mode);
+      }, 600);
+
+    } catch (err) {
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
+      pipelineCard.style.display = 'none';
+      showToast('❌ ' + err.message);
+      console.error(err);
+      
+      // If missing API key error, open modal automatically
+      if (err.message.toLowerCase().includes('api key')) {
+        apiModal.classList.add('show');
+      }
+    } finally {
+      generateBtn.disabled = false;
+    }
+  });
+
+  function setPipelineStep(stepNum, percent, statusText) {
+    pipelineStatusText.textContent = statusText;
+    progressBarFill.style.width = percent + '%';
+
+    [stepUpload, stepProcess, stepFormat].forEach((el, index) => {
+      if (index + 1 < stepNum) {
+        el.className = 'pipeline-step done';
+        el.querySelector('.step-status-icon').innerHTML = '✅';
+      } else if (index + 1 === stepNum) {
+        el.className = 'pipeline-step active';
+        el.querySelector('.step-status-icon').innerHTML = '<div class="spinner-small"></div>';
+      } else {
+        el.className = 'pipeline-step';
+        el.querySelector('.step-status-icon').innerHTML = '⏳';
+      }
+    });
+  }
+
+  // ==========================================================
+  // RESULT DISPLAY & FORMATTING
+  // ==========================================================
+  
+  function displayResult(promptText, mode) {
+    currentPromptResult = promptText;
+    rawPromptOutput.value = promptText;
+
+    if (mode === 'master_prompt') {
+      resultCardHeading.textContent = 'Viral Niche Master Prompt Template';
+    } else {
+      resultCardHeading.textContent = 'Exact Recreated Video Prompt';
+    }
+
+    // Format text: Highlight [Placeholders] and headers
+    const formattedHTML = formatMasterPromptHTML(promptText);
+    formattedPromptOutput.innerHTML = formattedHTML;
+
+    resultCard.style.display = 'flex';
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showToast('✨ Master Prompt extracted successfully!');
+  }
+
+  const copyOnlyPromptBtn = document.getElementById('copyOnlyPromptBtn');
+  
+  function formatMasterPromptHTML(text) {
+    // Clean raw text
+    let escaped = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    // Format section banners (e.g. ===== TITLE =====)
+    escaped = escaped.replace(/={5,}\s*([\s\S]*?)\s*={5,}/g, (match, p1) => {
+      return `<div class="prompt-header-tag">${p1.trim()}</div>`;
+    });
+
+    // Format bold markdown (**text**)
+    escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+    // Format bullet points (* or •)
+    escaped = escaped.replace(/^[•*]\s*(.*?)$/gm, '<div class="bullet-line">👉 $1</div>');
+
+    // Format [Bracketed Variables]
+    escaped = escaped.replace(/\[([^[\]]+)\]/g, '<span class="prompt-var">[$1]</span>');
+
+    return escaped;
+  }
+
+  // Helper to extract only the core prompt text from quotation marks
+  function extractCorePrompt(fullText) {
+    // If enclosed in quotes under THE MASTER PROMPT TEMPLATE
+    const quoteMatch = fullText.match(/"([^"]{30,})"/s);
+    if (quoteMatch && quoteMatch[1]) {
+      return quoteMatch[1].trim();
+    }
+    // Check if there is a section for MASTER PROMPT
+    const sectionMatch = fullText.match(/THE MASTER PROMPT TEMPLATE\s*=+\s*([\s\S]*?)(?:={5,}|$)/i);
+    if (sectionMatch && sectionMatch[1]) {
+      return sectionMatch[1].replace(/["']/g, '').replace(/\*\*/g, '').trim();
+    }
+    // Otherwise clean asterisks
+    return fullText.replace(/\*\*/g, '').trim();
+  }
+
+  // Tabs toggle
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+
+      const targetTab = btn.getAttribute('data-tab');
+      if (targetTab === 'formatted') {
+        document.getElementById('tabFormatted').classList.add('active');
+      } else {
+        document.getElementById('tabRaw').classList.add('active');
+      }
+    });
+  });
+
+  // Copy Prompt Only (Clean text for Sora/Runway/Kling)
+  if (copyOnlyPromptBtn) {
+    copyOnlyPromptBtn.addEventListener('click', () => {
+      if (!currentPromptResult) return;
+      const cleanPrompt = extractCorePrompt(currentPromptResult);
+      navigator.clipboard.writeText(cleanPrompt).then(() => {
+        showToast('⚡ Copied Clean Prompt (Ready for Sora/Runway)!');
+        copyOnlyPromptBtn.innerHTML = '<span class="action-icon">✅</span><span class="action-text">Copied!</span>';
+        setTimeout(() => {
+          copyOnlyPromptBtn.innerHTML = '<span class="action-icon">⚡</span><span class="action-text">Copy Prompt Only</span>';
+        }, 2500);
+      }).catch(() => {
+        showToast('❌ Unable to copy');
+      });
+    });
+  }
+
+  // Copy Full Report
+  copyResultBtn.addEventListener('click', () => {
+    if (!currentPromptResult) return;
+    const cleanFullReport = currentPromptResult.replace(/\*\*/g, '');
+    navigator.clipboard.writeText(cleanFullReport).then(() => {
+      showToast('📋 Copied Full Analysis Report!');
+      copyResultBtn.innerHTML = '<span class="action-icon">✅</span><span class="action-text">Copied!</span>';
+      setTimeout(() => {
+        copyResultBtn.innerHTML = '<span class="action-icon">📋</span><span class="action-text">Copy Full Report</span>';
+      }, 2500);
+    }).catch(() => {
+      showToast('❌ Unable to copy');
+    });
+  });
+
+  // Download .TXT
+  downloadResultBtn.addEventListener('click', () => {
+    if (!currentPromptResult) return;
+    const cleanFullReport = currentPromptResult.replace(/\*\*/g, '');
+    const blob = new Blob([cleanFullReport], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Master_Prompt_${Date.now()}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('💾 Prompt downloaded as text file!');
+  });
+
+  newAnalysisBtn.addEventListener('click', () => {
+    clearFilesBtn.click();
+    resultCard.style.display = 'none';
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  });
+
+  // ==========================================================
+  // PRESETS SHOWCASE DEMO
+  // ==========================================================
+  
+  const samplePresets = [
+    {
+      title: "🏎️ Luxury Supercar Glide",
+      mode: "video_prompt",
+      prompt: `A cinematic 8K photorealistic night tracking shot of a metallic obsidian [Vehicle / Supercar model] cruising slowly along rain-slicked Tokyo asphalt. Neon signs in vivid cyan and magenta reflect crisply in the wet street and curved car panels. The camera glides from a low three-quarter front angle, smoothly orbiting around to the rear taillights as volumetric smoke curls from the exhaust pipes. Cinematic shallow depth of field, anamorphic 35mm lens flares, 60fps ultra-smooth motion.`
+    },
+    {
+      title: "🧠 Dark Psychology Shadow Reel",
+      mode: "master_prompt",
+      prompt: `=========================================
+🔥 NICHE & VIRAL FORMULA ANALYSIS
+=========================================
+* **Target Niche**: Dark Psychology / Mindset Reels
+* **Hook Strategy**: High-contrast silhouette stepping out of shadow in 0.5 seconds with intense eye contact
+* **Visual Theme & Color Palette**: Desaturated obsidian, cold blue rim light, volumetric dust particles
+* **Camera & Editing Pace**: Fast push-in zoom with subtle handheld jitter
+
+=========================================
+🧠 THE MASTER PROMPT TEMPLATE
+=========================================
+"Cinematic 4k dramatic portrait video of [Subject: e.g. a stoic businessman in tailored black trenchcoat] stepping forward from deep shadows into a single harsh [Lighting style: e.g. icy blue overhead spotlight]. The camera executes a [Camera Movement: e.g. tense dolly zoom / vertigo effect] focusing on [Focal Detail: e.g. piercing focused eyes]. The background features [Atmosphere: e.g. floating smoky haze in a dark brutalist concrete room]. 24fps film noir aesthetic, photorealistic texture."
+
+=========================================
+🛠️ HOW TO USE THIS MASTER PROMPT
+=========================================
+1. Replace [Subject] with any archetypal character (Warrior, Thinker, CEO, Mystery figure).
+2. Use strong contrasting single light sources (Crimson, Ice Blue, Gold) for maximum TikTok/Reels scroll-stopping power.`
+    },
+    {
+      title: "💻 Futuristic Holographic Showcase",
+      mode: "video_prompt",
+      prompt: `Hyper-futuristic product showcase of a floating translucent [Tech Device: e.g. quantum neural phone], hovering in mid-air. Glowing neon teal and purple circuit diagrams project outward in 3D holographic layers. The camera does a slow macro 360-degree orbital rotation with smooth rotational parallax. Clean minimalist cyberpunk laboratory backdrop, soft diffused white studio lighting, 8k resolution, Unreal Engine 5 render style.`
+    }
+  ];
+
+  window.showPreset = function(index) {
+    const preset = samplePresets[index];
+    if (preset) {
+      displayResult(preset.prompt, preset.mode);
+      showToast(`✨ Loaded Preset: ${preset.title}`);
+    }
+  };
+
+  // ==========================================================
+  // TOAST UTILITY
+  // ==========================================================
+  
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
+    const toastIcon = document.getElementById('toastIcon');
+
+    if (msg.startsWith('✅') || msg.startsWith('✨') || msg.startsWith('📋') || msg.startsWith('💾')) {
+      toastIcon.textContent = msg.slice(0, 2);
+      toastMsg.textContent = msg.slice(2).trim();
+    } else if (msg.startsWith('❌')) {
+      toastIcon.textContent = '❌';
+      toastMsg.textContent = msg.slice(2).trim();
+    } else {
+      toastIcon.textContent = 'ℹ️';
+      toastMsg.textContent = msg;
+    }
+
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3500);
+  }
+});
+
+</script>
 </body>
 </html>
