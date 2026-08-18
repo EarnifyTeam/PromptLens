@@ -1,5 +1,5 @@
 # ==========================================================
-# EARNIFY PROMPT DETECTOR PRO - CLOUD & LOCAL BACKEND
+# PROMPTLENS BY BORNALABS - CLOUD & LOCAL BACKEND
 # Backend: Flask + Google GenAI SDK (Gemini Vision)
 # ==========================================================
 
@@ -9,40 +9,52 @@ import time
 import tempfile
 import traceback
 import logging
-import threading
 from flask import Flask, request, jsonify, render_template
 from google import genai
-from google.genai import types
 
 # ==========================================================
-# CONFIG & PATH RESOLUTION
+# CONFIG & PATH RESOLUTION (COMPATIBLE WITH VERCEL, RENDER, LOCAL)
 # ==========================================================
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PORT = int(os.environ.get("PORT", 5000))
-UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
-OUTPUT_FOLDER = os.path.join(os.getcwd(), "output")
-LOGS_FOLDER = os.path.join(os.getcwd(), "logs")
-TEMP_FOLDER = os.path.join(os.getcwd(), "temp")
-API_KEY_FILE = os.path.join(os.getcwd(), "api_key.txt")
+IS_VERCEL = bool(os.environ.get("VERCEL"))
 
-# Ensure runtime directories exist
-for folder in [UPLOAD_FOLDER, OUTPUT_FOLDER, LOGS_FOLDER, TEMP_FOLDER]:
-    os.makedirs(folder, exist_ok=True)
+# Use /tmp for serverless/cloud environments, local folders for desktop
+if IS_VERCEL:
+    TEMP_FOLDER = tempfile.gettempdir()
+    OUTPUT_FOLDER = tempfile.gettempdir()
+    LOGS_FOLDER = tempfile.gettempdir()
+    API_KEY_FILE = os.path.join(tempfile.gettempdir(), "api_key.txt")
+else:
+    TEMP_FOLDER = os.path.join(BASE_DIR, "temp")
+    OUTPUT_FOLDER = os.path.join(BASE_DIR, "output")
+    LOGS_FOLDER = os.path.join(BASE_DIR, "logs")
+    API_KEY_FILE = os.path.join(BASE_DIR, "api_key.txt")
+    for folder in [TEMP_FOLDER, OUTPUT_FOLDER, LOGS_FOLDER]:
+        try:
+            os.makedirs(folder, exist_ok=True)
+        except Exception:
+            pass
 
-# Configure logging
+# Configure logging (StreamHandler for Vercel/Cloud to prevent read-only filesystem crash)
 log_format = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(
-    level=logging.INFO,
-    format=log_format,
-    handlers=[
-        logging.FileHandler(os.path.join(LOGS_FOLDER, "app.log"), encoding='utf-8', mode='a'),
-        logging.StreamHandler(sys.stdout)
-    ]
-)
-logger = logging.getLogger("EarnifyPromptDetector")
+handlers = [logging.StreamHandler(sys.stdout)]
+
+if not IS_VERCEL:
+    try:
+        handlers.append(logging.FileHandler(os.path.join(LOGS_FOLDER, "app.log"), encoding='utf-8', mode='a'))
+    except Exception:
+        pass
+
+logging.basicConfig(level=logging.INFO, format=log_format, handlers=handlers)
+logger = logging.getLogger("PromptLens")
 
 # Top-level Flask app declaration for Vercel & WSGI servers
-app = Flask(__name__, template_folder="templates", static_folder="static")
+template_dir = os.path.join(BASE_DIR, "templates")
+static_dir = os.path.join(BASE_DIR, "static")
+
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 application = app
 handler = app
 
@@ -76,6 +88,8 @@ def get_server_default_key():
 
 def save_local_key(api_key):
     """Optionally cache API key locally for desktop mode"""
+    if IS_VERCEL:
+        return
     try:
         with open(API_KEY_FILE, "w", encoding="utf-8") as f:
             f.write(api_key.strip())
@@ -98,8 +112,8 @@ def home():
 def health():
     return jsonify({
         "status": "healthy",
-        "service": "Earnify Prompt Detector Pro",
-        "version": "2.5.0",
+        "service": "PromptLens by BornaLabs",
+        "version": "3.6.0",
         "has_server_key": bool(get_server_default_key())
     })
 
@@ -118,7 +132,6 @@ def verify_key():
         
         # Test client connection with lightweight call
         test_client = genai.Client(api_key=api_key)
-        # Try a quick test model ping
         response = test_client.models.generate_content(
             model='gemini-3.6-flash',
             contents='ping'
@@ -153,8 +166,7 @@ def analyze_video():
                 "error": "Gemini API Key is required. Please add your key in the API Settings."
             }), 400
         
-        # Save to local file if running locally
-        if not os.environ.get("RENDER") and not os.environ.get("PORT"):
+        if not IS_VERCEL:
             save_local_key(api_key)
         
         # Initialize Gemini Client
@@ -250,15 +262,16 @@ def analyze_video():
             
         logger.info(f"Prompt detection completed successfully using {used_model}.")
         
-        # 6. Save output locally for historical record if allowed
-        try:
-            timestamp = int(time.time())
-            output_filename = f"prompt_{timestamp}.txt"
-            output_path = os.path.join(OUTPUT_FOLDER, output_filename)
-            with open(output_path, "w", encoding="utf-8") as out_f:
-                out_f.write(result_text)
-        except Exception as e:
-            logger.warning(f"Could not persist output to disk: {e}")
+        # 6. Save output locally if not on serverless
+        if not IS_VERCEL:
+            try:
+                timestamp = int(time.time())
+                output_filename = f"prompt_{timestamp}.txt"
+                output_path = os.path.join(OUTPUT_FOLDER, output_filename)
+                with open(output_path, "w", encoding="utf-8") as out_f:
+                    out_f.write(result_text)
+            except Exception as e:
+                logger.warning(f"Could not persist output to disk: {e}")
             
         return jsonify({
             "success": True,
@@ -296,15 +309,6 @@ def analyze_video():
 
 if __name__ == "__main__":
     logger.info("=" * 60)
-    logger.info(f"Starting Earnify Prompt Detector Pro on port {PORT}...")
+    logger.info(f"Starting PromptLens on port {PORT}...")
     logger.info("=" * 60)
-    
-    # Auto-open browser only on local desktop executions
-    if os.environ.get("AUTO_OPEN", "0") == "1" or getattr(sys, 'frozen', False):
-        def open_browser():
-            time.sleep(1.5)
-            import webbrowser
-            webbrowser.open(f"http://127.0.0.1:{PORT}")
-        threading.Thread(target=open_browser, daemon=True).start()
-    
     app.run(host="0.0.0.0", port=PORT, debug=False)
