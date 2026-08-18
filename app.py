@@ -41,15 +41,18 @@ logging.basicConfig(
 )
 logger = logging.getLogger("EarnifyPromptDetector")
 
-# Setup template and static folders for both Dev, Cloud, and PyInstaller frozen binary
+# Top-level Flask app declaration for Vercel & WSGI servers
+app = Flask(__name__, template_folder="templates", static_folder="static")
+application = app
+handler = app
+
+# PyInstaller frozen binary adjustments if running locally as .exe
 if getattr(sys, 'frozen', False):
-    template_dir = os.path.join(sys._MEIPASS, 'templates')
-    static_dir = os.path.join(sys._MEIPASS, 'static')
-    app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+    app.template_folder = os.path.join(sys._MEIPASS, 'templates')
+    app.static_folder = os.path.join(sys._MEIPASS, 'static')
     logger.info(f"Running in PyInstaller frozen mode. Assets from: {sys._MEIPASS}")
 else:
-    app = Flask(__name__, template_folder="templates", static_folder="static")
-    logger.info("Running in standard web/development mode.")
+    logger.info("Running in standard web/cloud mode.")
 
 # Limit upload size (e.g. up to 150MB per request)
 app.config['MAX_CONTENT_LENGTH'] = 150 * 1024 * 1024
